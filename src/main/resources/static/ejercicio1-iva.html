@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calculadora de IVA</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 20px; }
+        label, input, button { margin-bottom: 10px; display: block; }
+        #resultado { margin-top: 20px; font-weight: bold; color: blue; }
+    </style>
+</head>
+<body>
+    <h1>Calculadora de Precio con IVA (19%)</h1>
+
+    <label for="precioArticulo">Precio del Artículo:</label>
+    <input type="number" id="precioArticulo" step="0.01" value="100.00">
+    <button onclick="calcularIVA()">Calcular con IVA</button>
+
+    <div id="resultado"></div>
+
+    <script>
+        async function calcularIVA() {
+            const precio = document.getElementById('precioArticulo').value;
+            if (precio === "" || isNaN(precio)) {
+                alert("Por favor, ingrese un precio válido.");
+                return;
+            }
+
+            // Construir la URL de la API
+            const url = `/iva/calcular?precio=${precio}`;
+
+            try {
+                // Realizar la solicitud GET a tu API de Spring Boot
+                const response = await fetch(url);
+                
+                // Verificar si la respuesta fue exitosa (código 200)
+                if (!response.ok) {
+                    throw new Error(`Error HTTP: ${response.status}`);
+                }
+
+                // Obtener la respuesta como texto
+                const data = await response.text();
+
+                // Mostrar el resultado en el div
+                document.getElementById('resultado').innerText = data;
+
+            } catch (error) {
+                console.error("Error al calcular el IVA:", error);
+                document.getElementById('resultado').innerText = "Hubo un error al calcular. " + error.message;
+            }
+        }
+    </script>
+</body>
+</html>
