@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Conversor de Temperatura</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <h1>Conversor de Fahrenheit a Celsius</h1>
+
+        <label for="fahrenheit">Grados Fahrenheit:</label>
+        <input type="number" id="fahrenheit" step="0.01" value="68.00">
+
+        <button onclick="convertirTemperatura()">Convertir a Celsius</button>
+
+        <div id="resultado"></div>
+    </div>
+
+    <script>
+        async function convertirTemperatura() {
+            const fahrenheit = document.getElementById('fahrenheit').value;
+
+            if (fahrenheit === "" || isNaN(fahrenheit)) {
+                alert("Por favor, ingrese un valor numérico válido para Fahrenheit.");
+                return;
+            }
+
+            const url = `/temperatura/fahrenheit-to-celsius?fahrenheit=${fahrenheit}`;
+
+            try {
+                const response = await fetch(url);
+                if (!response.ok) {
+                    throw new Error(`Error HTTP: ${response.status}`);
+                }
+                const data = await response.text();
+                document.getElementById('resultado').innerText = data;
+            } catch (error) {
+                console.error("Error al convertir temperatura:", error);
+                document.getElementById('resultado').innerText = "Hubo un error al calcular. " + error.message;
+            }
+        }
+    </script>
+</body>
+</html>

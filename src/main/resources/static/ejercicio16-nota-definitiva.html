@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cálculo de Nota Definitiva</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <h1>Cálculo de Nota Definitiva de Asignatura</h1>
+        <p>Ingrese las notas correspondientes (en escala de 0 a 5):</p>
+
+        <label for="parcial">Nota Parcial (20%):</label>
+        <input type="number" id="parcial" step="0.1" min="0" max="5" value="3.5">
+
+        <label for="final">Nota Final (20%):</label>
+        <input type="number" id="final" step="0.1" min="0" max="5" value="4.0">
+
+        <label for="seguimiento">Nota Seguimiento (60%):</label>
+        <input type="number" id="seguimiento" step="0.1" min="0" max="5" value="4.8">
+
+        <button onclick="calcularNota()">Calcular Nota Definitiva</button>
+
+        <div id="resultado"></div>
+    </div>
+
+    <script>
+        async function calcularNota() {
+            const parcial = parseFloat(document.getElementById('parcial').value);
+            const fin = parseFloat(document.getElementById('final').value);
+            const seguimiento = parseFloat(document.getElementById('seguimiento').value);
+
+            if (isNaN(parcial) || isNaN(fin) || isNaN(seguimiento) ||
+                parcial < 0 || parcial > 5 || fin < 0 || fin > 5 || seguimiento < 0 || seguimiento > 5) {
+                alert("Por favor, ingrese notas numéricas válidas en el rango de 0 a 5.");
+                return;
+            }
+
+            const url = `/notas/definitiva?parcial=${parcial}&fin=${fin}&seguimiento=${seguimiento}`;
+
+            try {
+                const response = await fetch(url);
+                if (!response.ok) {
+                    throw new Error(`Error HTTP: ${response.status}`);
+                }
+                const data = await response.text();
+                document.getElementById('resultado').innerText = data;
+            } catch (error) {
+                console.error("Error al calcular nota definitiva:", error);
+                document.getElementById('resultado').innerText = "Hubo un error al calcular. " + error.message;
+            }
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cálculo de Cuota Inicial de Casa</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <h1>Cálculo de Cuota Inicial de Casa</h1>
+
+        <label for="valorCasa">Valor Total de la Casa ($):</label>
+        <input type="number" id="valorCasa" step="0.01" value="250000000.00">
+
+        <button onclick="calcularCasa()">Calcular Valores</button>
+
+        <div id="resultado"></div>
+    </div>
+
+    <script>
+        async function calcularCasa() {
+            const valorCasa = document.getElementById('valorCasa').value;
+
+            if (valorCasa === "" || isNaN(valorCasa)) {
+                alert("Por favor, ingrese un valor numérico válido para la casa.");
+                return;
+            }
+
+            const url = `/inmuebles/calcular-casa?valor=${valorCasa}`;
+
+            try {
+                const response = await fetch(url);
+                if (!response.ok) {
+                    throw new Error(`Error HTTP: ${response.status}`);
+                }
+                const data = await response.text();
+                document.getElementById('resultado').innerHTML = data; // Usar innerHTML para <br>
+            } catch (error) {
+                console.error("Error al calcular valores de casa:", error);
+                document.getElementById('resultado').innerText = "Hubo un error al calcular. " + error.message;
+            }
+        }
+    </script>
+</body>
+</html>

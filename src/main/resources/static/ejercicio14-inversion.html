@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Porcentaje de Inversión</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <h1>Cálculo de Porcentaje de Inversión en Empresa</h1>
+        <p>Ingrese el monto invertido por cada persona:</p>
+
+        <label for="inv1">Inversión Persona 1 ($):</label>
+        <input type="number" id="inv1" step="0.01" value="50000.00">
+
+        <label for="inv2">Inversión Persona 2 ($):</label>
+        <input type="number" id="inv2" step="0.01" value="30000.00">
+
+        <label for="inv3">Inversión Persona 3 ($):</label>
+        <input type="number" id="inv3" step="0.01" value="20000.00">
+
+        <button onclick="calcularInversion()">Calcular Porcentajes</button>
+
+        <div id="resultado"></div>
+    </div>
+
+    <script>
+        async function calcularInversion() {
+            const inv1 = parseFloat(document.getElementById('inv1').value);
+            const inv2 = parseFloat(document.getElementById('inv2').value);
+            const inv3 = parseFloat(document.getElementById('inv3').value);
+
+            if (isNaN(inv1) || isNaN(inv2) || isNaN(inv3) || inv1 < 0 || inv2 < 0 || inv3 < 0) {
+                alert("Por favor, ingrese valores numéricos válidos y positivos para las inversiones.");
+                return;
+            }
+
+            const url = `/empresa/porcentaje-inversion?inv1=${inv1}&inv2=${inv2}&inv3=${inv3}`;
+
+            try {
+                const response = await fetch(url);
+                if (!response.ok) {
+                    throw new Error(`Error HTTP: ${response.status}`);
+                }
+                const data = await response.text();
+                document.getElementById('resultado').innerHTML = data; // Usar innerHTML para <br>
+            } catch (error) {
+                console.error("Error al calcular porcentaje de inversión:", error);
+                document.getElementById('resultado').innerText = "Hubo un error al calcular. " + error.message;
+            }
+        }
+    </script>
+</body>
+</html>

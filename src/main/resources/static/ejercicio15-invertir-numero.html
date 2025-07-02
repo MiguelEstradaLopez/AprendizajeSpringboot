@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Número Invertido (Dos Cifras)</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <h1>Invertir Número de Dos Cifras</h1>
+        <p>Ingrese un número entero de dos cifras (ej. 15, 73):</p>
+
+        <label for="numero">Número:</label>
+        <input type="number" id="numero" value="15" min="10" max="99">
+
+        <button onclick="invertirNumero()">Invertir Número</button>
+
+        <div id="resultado"></div>
+    </div>
+
+    <script>
+        async function invertirNumero() {
+            const numero = document.getElementById('numero').value;
+
+            if (numero === "" || isNaN(numero) || parseInt(numero) < 10 || parseInt(numero) > 99) {
+                alert("Por favor, ingrese un número entero de dos cifras (entre 10 y 99).");
+                return;
+            }
+
+            const url = `/numeros/invertir-dos-cifras?numero=${numero}`;
+
+            try {
+                const response = await fetch(url);
+                if (!response.ok) {
+                    throw new Error(`Error HTTP: ${response.status}`);
+                }
+                const data = await response.text();
+                document.getElementById('resultado').innerText = data;
+            } catch (error) {
+                console.error("Error al invertir número:", error);
+                document.getElementById('resultado').innerText = "Hubo un error al procesar. " + error.message;
+            }
+        }
+    </script>
+</body>
+</html>

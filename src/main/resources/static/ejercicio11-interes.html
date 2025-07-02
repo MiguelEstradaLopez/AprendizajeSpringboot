@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cálculo de Interés</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <h1>Cálculo de Interés Ganado</h1>
+
+        <label for="montoInversion">Monto de la Inversión ($):</label>
+        <input type="number" id="montoInversion" step="0.01" value="1000.00">
+
+        <label for="porcentajeInteres">Porcentaje de Interés (%):</label>
+        <input type="number" id="porcentajeInteres" step="0.01" value="5.00">
+
+        <button onclick="calcularInteres()">Calcular Interés</button>
+
+        <div id="resultado"></div>
+    </div>
+
+    <script>
+        async function calcularInteres() {
+            const montoInversion = document.getElementById('montoInversion').value;
+            const porcentajeInteres = document.getElementById('porcentajeInteres').value;
+
+            if (montoInversion === "" || isNaN(montoInversion) || porcentajeInteres === "" || isNaN(porcentajeInteres)) {
+                alert("Por favor, ingrese valores numéricos válidos para monto e interés.");
+                return;
+            }
+
+            const url = `/finanzas/calcular-interes?monto=${montoInversion}&interes=${porcentajeInteres}`;
+
+            try {
+                const response = await fetch(url);
+                if (!response.ok) {
+                    throw new Error(`Error HTTP: ${response.status}`);
+                }
+                const data = await response.text();
+                document.getElementById('resultado').innerText = data;
+            } catch (error) {
+                console.error("Error al calcular interés:", error);
+                document.getElementById('resultado').innerText = "Hubo un error al calcular. " + error.message;
+            }
+        }
+    </script>
+</body>
+</html>

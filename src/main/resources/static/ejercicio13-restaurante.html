@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ventas de Restaurante</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <h1>Ventas Diarias de Restaurante</h1>
+        <p>Ingrese la cantidad vendida de cada combo:</p>
+
+        <label for="combo1">Cantidad Combo 1 (Hamburguesa, papas, gaseosa - $10000):</label>
+        <input type="number" id="combo1" value="0" min="0">
+
+        <label for="combo2">Cantidad Combo 2 (Perro, gaseosa - $7000):</label>
+        <input type="number" id="combo2" value="0" min="0">
+
+        <label for="combo3">Cantidad Combo 3 (Tacos, gaseosa - $8000):</label>
+        <input type="number" id="combo3" value="0" min="0">
+
+        <button onclick="calcularVentas()">Calcular Ventas Totales</button>
+
+        <div id="resultado"></div>
+    </div>
+
+    <script>
+        async function calcularVentas() {
+            const combo1 = parseInt(document.getElementById('combo1').value);
+            const combo2 = parseInt(document.getElementById('combo2').value);
+            const combo3 = parseInt(document.getElementById('combo3').value);
+
+            if (isNaN(combo1) || isNaN(combo2) || isNaN(combo3) || combo1 < 0 || combo2 < 0 || combo3 < 0) {
+                alert("Por favor, ingrese cantidades válidas (números enteros positivos o cero).");
+                return;
+            }
+
+            const url = `/restaurante/ventas?combo1=${combo1}&combo2=${combo2}&combo3=${combo3}`;
+
+            try {
+                const response = await fetch(url);
+                if (!response.ok) {
+                    throw new Error(`Error HTTP: ${response.status}`);
+                }
+                const data = await response.text();
+                document.getElementById('resultado').innerText = data;
+            } catch (error) {
+                console.error("Error al calcular ventas del restaurante:", error);
+                document.getElementById('resultado').innerText = "Hubo un error al calcular. " + error.message;
+            }
+        }
+    </script>
+</body>
+</html>
