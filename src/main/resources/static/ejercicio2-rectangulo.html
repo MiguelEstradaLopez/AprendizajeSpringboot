@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calcular Área de Rectángulo</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <h1>Calculadora de Área de Rectángulo</h1>
+
+        <label for="largo">Largo del Rectángulo:</label>
+        <input type="number" id="largo" step="0.01" value="10.00">
+
+        <label for="ancho">Ancho del Rectángulo:</label>
+        <input type="number" id="ancho" step="0.01" value="5.00">
+
+        <button onclick="calcularArea()">Calcular Área</button>
+
+        <div id="resultado"></div>
+    </div>
+
+    <script>
+        async function calcularArea() {
+            const largo = document.getElementById('largo').value;
+            const ancho = document.getElementById('ancho').value;
+
+            if (largo === "" || isNaN(largo) || ancho === "" || isNaN(ancho)) {
+                alert("Por favor, ingrese valores numéricos válidos para largo y ancho.");
+                return;
+            }
+
+            const url = `/rectangulo/area?largo=${largo}&ancho=${ancho}`;
+
+            try {
+                const response = await fetch(url);
+                if (!response.ok) {
+                    throw new Error(`Error HTTP: ${response.status}`);
+                }
+                const data = await response.text();
+                document.getElementById('resultado').innerText = data;
+            } catch (error) {
+                console.error("Error al calcular el área del rectángulo:", error);
+                document.getElementById('resultado').innerText = "Hubo un error al calcular. " + error.message;
+            }
+        }
+    </script>
+</body>
+</html>
