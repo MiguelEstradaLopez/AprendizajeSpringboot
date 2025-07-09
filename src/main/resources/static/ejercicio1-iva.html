@@ -5,45 +5,44 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Calculadora de IVA</title>
     <link rel="stylesheet" href="styles.css">
-</head>
+    </head>
 <body>
-    <h1>Calculadora de Precio con IVA (19%)</h1>
+    <div class="container">
+        <h1>Calculadora de Precio con IVA (19%)</h1>
+        <p class="info-text">Ingrese el precio original del artículo para calcular su valor final con un 19% de IVA.</p>
 
-    <label for="precioArticulo">Precio del Artículo:</label>
-    <input type="number" id="precioArticulo" step="0.01" value="100.00">
-    <button onclick="calcularIVA()">Calcular con IVA</button>
+        <div class="input-group">
+            <label for="precio">Precio del Artículo:</label>
+            <input type="number" id="precio" placeholder="Ej: 100.00" value="100.00">
+        </div>
 
-    <div id="resultado"></div>
+        <button onclick="calcularIVA()">Calcular con IVA</button>
+
+        <div id="resultado"></div>
+    </div>
 
     <script>
         async function calcularIVA() {
-            const precio = document.getElementById('precioArticulo').value;
-            if (precio === "" || isNaN(precio)) {
-                alert("Por favor, ingrese un precio válido.");
+            const precioInput = document.getElementById('precio').value;
+            const precio = parseFloat(precioInput);
+
+            if (isNaN(precio) || precio < 0) {
+                document.getElementById('resultado').innerText = "Por favor, ingrese un precio válido.";
                 return;
             }
 
-            // Construir la URL de la API
             const url = `/iva/calcular?precio=${precio}`;
 
             try {
-                // Realizar la solicitud GET a tu API de Spring Boot
                 const response = await fetch(url);
-                
-                // Verificar si la respuesta fue exitosa (código 200)
                 if (!response.ok) {
                     throw new Error(`Error HTTP: ${response.status}`);
                 }
-
-                // Obtener la respuesta como texto
-                const data = await response.text();
-
-                // Mostrar el resultado en el div
+                const data = await response.text(); // Esperamos el texto de la respuesta del backend
                 document.getElementById('resultado').innerText = data;
-
             } catch (error) {
-                console.error("Error al calcular el IVA:", error);
-                document.getElementById('resultado').innerText = "Hubo un error al calcular. " + error.message;
+                console.error("Error al calcular IVA:", error);
+                document.getElementById('resultado').innerText = "Hubo un error al calcular el IVA: " + error.message;
             }
         }
     </script>

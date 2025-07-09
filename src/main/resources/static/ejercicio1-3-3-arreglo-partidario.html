@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Arreglo Partidario</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <h1>Determinar si un Arreglo es Partidario</h1>
+        <p class="info-text">Un arreglo es "partidario" si cada número en una casilla par (índice 0, 2, 4...) es mayor que *cualquiera* de los números que están en las casillas impares (índice 1, 3, 5...).</p>
+        <p class="info-text">Ingrese un arreglo de números enteros separados por comas.</p>
+        <p class="info-text">Ejemplo: 100,5,200,1,1000,0,600,50,300,4</p>
+
+        <div class="input-group">
+            <label for="arregloInput">Arreglo de Números (ej: 100,5,200,1,1000,0):</label>
+            <input type="text" id="arregloInput" value="100,5,200,1,1000,0,600,50,300,4">
+        </div>
+
+        <button onclick="verificarPartidario()">Verificar si es Partidario</button>
+
+        <div id="resultado"></div>
+    </div>
+
+    <script>
+        async function verificarPartidario() {
+            const arregloStr = document.getElementById('arregloInput').value.trim();
+
+            if (arregloStr === "") {
+                alert("Por favor, ingrese un arreglo de números.");
+                return;
+            }
+
+            // Validación de formato
+            const numberListRegex = /^(\s*-?\d+\s*(,\s*-?\d+\s*)*)?$/;
+            if (!numberListRegex.test(arregloStr)) {
+                document.getElementById('resultado').innerText = "Error: El formato del arreglo es incorrecto. Asegúrese de que contiene solo números enteros y comas.";
+                return;
+            }
+
+            const url = `/arreglos/es-partidario?arreglo=${encodeURIComponent(arregloStr)}`;
+
+            try {
+                const response = await fetch(url);
+                if (!response.ok) {
+                    throw new Error(`Error HTTP: ${response.status}`);
+                }
+                const data = await response.text();
+                document.getElementById('resultado').innerText = data;
+            } catch (error) {
+                console.error("Error al verificar arreglo partidario:", error);
+                document.getElementById('resultado').innerText = "Hubo un error al verificar el arreglo: " + error.message;
+            }
+        }
+    </script>
+</body>
+</html>

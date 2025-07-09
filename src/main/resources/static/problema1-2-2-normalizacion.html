@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Normalización de Números</title>
+    <link rel="stylesheet" href="styles.css">
+    </head>
+<body>
+    <div class="container">
+        <h1>Normalización de una Colección de Números Reales</h1>
+        <p class="info-text">Ingrese una colección de números reales separados por comas (ej: 10.5, 20.0, 5.2, 15.0). Los números serán normalizados al rango [0, 1].</p>
+
+        <div class="input-group">
+            <label for="numerosInput">Números a Normalizar:</label>
+            <input type="text" id="numerosInput" placeholder="Ej: 10.5, 20.0, 5.2, 15.0" value="10.5,20.0,5.2,15.0">
+        </div>
+
+        <button onclick="normalizarColeccion()">Normalizar Números</button>
+
+        <div id="resultado"></div>
+    </div>
+
+    <script>
+        async function normalizarColeccion() {
+            const numerosInput = document.getElementById('numerosInput').value;
+
+            if (numerosInput.trim() === "") {
+                alert("Por favor, ingrese al menos un número para normalizar.");
+                return;
+            }
+
+            const url = `/normalizacion/normalizar?numeros=${encodeURIComponent(numerosInput)}`;
+
+            try {
+                const response = await fetch(url);
+                if (!response.ok) {
+                    throw new Error(`Error HTTP: ${response.status}`);
+                }
+                const data = await response.text();
+                document.getElementById('resultado').innerText = data;
+            } catch (error) {
+                console.error("Error al normalizar números:", error);
+                document.getElementById('resultado').innerText = "Hubo un error al normalizar. " + error.message;
+            }
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mezcla de Arreglos Ordenados</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <h1>Mezcla de Arreglos Ordenados Ascendentemente</h1>
+        <p class="info-text">Ingrese dos arreglos de números enteros (separados por comas) ya ordenados ascendentemente. El algoritmo los mezclará en una única lista ordenada.</p>
+        <p class="info-text">Ejemplo: Arreglo 1: 1,3,6,9,17 | Arreglo 2: 2,4,10,17</p>
+
+        <div class="input-group">
+            <label for="arr1Input">Primer Arreglo (ej: 1,3,6,9,17):</label>
+            <input type="text" id="arr1Input" value="1,3,6,9,17">
+        </div>
+
+        <div class="input-group">
+            <label for="arr2Input">Segundo Arreglo (ej: 2,4,10,17):</label>
+            <input type="text" id="arr2Input" value="2,4,10,17">
+        </div>
+
+        <button onclick="mezclarArreglos()">Mezclar Arreglos</button>
+
+        <div id="resultado"></div>
+    </div>
+
+    <script>
+        async function mezclarArreglos() {
+            const arr1 = document.getElementById('arr1Input').value.trim();
+            const arr2 = document.getElementById('arr2Input').value.trim();
+
+            if (arr1 === "" && arr2 === "") {
+                alert("Por favor, ingrese al menos un arreglo de números.");
+                return;
+            }
+
+            // Validar que solo contenga números y comas
+            const numberListRegex = /^(\s*-?\d+\s*(,\s*-?\d+\s*)*)?$/;
+            if (!numberListRegex.test(arr1) || !numberListRegex.test(arr2)) {
+                document.getElementById('resultado').innerText = "Error: Asegúrese de que las entradas contienen solo números enteros y comas válidas.";
+                return;
+            }
+
+            const url = `/arreglos/mezclar?arr1=${encodeURIComponent(arr1)}&arr2=${encodeURIComponent(arr2)}`;
+
+            try {
+                const response = await fetch(url);
+                if (!response.ok) {
+                    throw new Error(`Error HTTP: ${response.status}`);
+                }
+                const data = await response.text();
+                document.getElementById('resultado').innerText = data;
+            } catch (error) {
+                console.error("Error al mezclar arreglos:", error);
+                document.getElementById('resultado').innerText = "Hubo un error al mezclar los arreglos: " + error.message;
+            }
+        }
+    </script>
+</body>
+</html>

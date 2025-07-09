@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Suma de Números Binarios</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <h1>Suma de Números Binarios</h1>
+        <p class="info-text">Ingrese dos números binarios (cadenas de '0's y '1's) para calcular su suma en binario.</p>
+
+        <div class="input-group">
+            <label for="binario1">Primer Número Binario:</label>
+            <input type="text" id="binario1" placeholder="Ej: 101" value="101">
+        </div>
+
+        <div class="input-group">
+            <label for="binario2">Segundo Número Binario:</label>
+            <input type="text" id="binario2" placeholder="Ej: 1101" value="1101">
+        </div>
+
+        <button onclick="sumarBinarios()">Sumar Binarios</button>
+
+        <div id="resultado"></div>
+    </div>
+
+    <script>
+        async function sumarBinarios() {
+            const binario1 = document.getElementById('binario1').value.trim();
+            const binario2 = document.getElementById('binario2').value.trim();
+
+            if (binario1 === "" || binario2 === "") {
+                alert("Por favor, ingrese ambos números binarios.");
+                return;
+            }
+
+            // Simple validación del lado del cliente para mejorar la experiencia
+            const binaryRegex = /^[01]+$/;
+            if (!binaryRegex.test(binario1) || !binaryRegex.test(binario2)) {
+                document.getElementById('resultado').innerText = "Error: Asegúrese de que ambos números son binarios válidos (solo '0' y '1').";
+                return;
+            }
+
+            const url = `/binario/sumar?binario1=${encodeURIComponent(binario1)}&binario2=${encodeURIComponent(binario2)}`;
+
+            try {
+                const response = await fetch(url);
+                if (!response.ok) {
+                    throw new Error(`Error HTTP: ${response.status}`);
+                }
+                const data = await response.text();
+                document.getElementById('resultado').innerText = data;
+            } catch (error) {
+                console.error("Error al sumar binarios:", error);
+                document.getElementById('resultado').innerText = "Hubo un error al sumar los binarios: " + error.message;
+            }
+        }
+    </script>
+</body>
+</html>
