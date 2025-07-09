@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Producción de Leche en Hacienda</title>
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        /* Estilos específicos para la salida de este ejercicio si es necesario */
+        #resultado {
+            white-space: pre-wrap; /* Mantiene saltos de línea y espacios en blanco */
+            text-align: left; /* Alinea el texto a la izquierda para el informe */
+            font-family: 'Roboto Mono', monospace; /* Fuente monoespaciada para mejor visualización de tablas */
+            background-color: var(--input-bg); /* Fondo para el bloque de resultados */
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Producción de Leche en Hacienda</h1>
+        <p class="info-text">Simula y calcula la producción de leche diaria de un hato de 'N' vacas durante una semana. El sistema generará datos aleatorios para la producción.</p>
+
+        <div class="input-group">
+            <label for="numVacasInput">Número de Vacas (N):</label>
+            <input type="number" id="numVacasInput" value="5" min="1" placeholder="Ej: 10">
+        </div>
+
+        <button onclick="analizarProduccion()">Analizar Producción</button>
+
+        <div id="resultado"></div>
+    </div>
+
+    <script>
+        async function analizarProduccion() {
+            const numVacas = document.getElementById('numVacasInput').value;
+
+            if (numVacas === "" || isNaN(numVacas) || parseInt(numVacas) <= 0) {
+                document.getElementById('resultado').innerText = "Error: Por favor, ingrese un número de vacas válido (mayor que 0).";
+                return;
+            }
+
+            const url = `/hacienda/produccion?numVacas=${encodeURIComponent(numVacas)}`;
+
+            try {
+                const response = await fetch(url);
+                if (!response.ok) {
+                    const errorText = await response.text();
+                    throw new Error(`Error HTTP: ${response.status} - ${errorText}`);
+                }
+                const data = await response.text();
+                document.getElementById('resultado').innerText = data;
+            } catch (error) {
+                console.error("Error al analizar producción:", error);
+                document.getElementById('resultado').innerText = "Hubo un error al analizar la producción de leche: " + error.message;
+            }
+        }
+    </script>
+</body>
+</html>

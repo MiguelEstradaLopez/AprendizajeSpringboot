@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calificaciones de Restaurante</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <h1>Calificaciones de Aspectos de Restaurante</h1>
+        <p class="info-text">Ingrese las calificaciones (de 1 a 10) de cinco clientes para cada aspecto del restaurante, separadas por comas.</p>
+        <p class="info-text">Ejemplo: Para Atención: 8,9,7,10,8</p>
+
+        <div class="input-group">
+            <label for="atencionInput">Calificaciones de Atención (5 clientes):</label>
+            <input type="text" id="atencionInput" value="8,9,7,10,8" placeholder="Ej: 8,9,7,10,8">
+        </div>
+
+        <div class="input-group">
+            <label for="comidaInput">Calificaciones de Calidad de la Comida (5 clientes):</label>
+            <input type="text" id="comidaInput" value="9,8,9,7,10" placeholder="Ej: 9,8,9,7,10">
+        </div>
+
+        <div class="input-group">
+            <label for="precioInput">Calificaciones de Justicia del Precio (5 clientes):</label>
+            <input type="text" id="precioInput" value="7,7,8,6,7" placeholder="Ej: 7,7,8,6,7">
+        </div>
+
+        <div class="input-group">
+            <label for="ambienteInput">Calificaciones de Ambiente (5 clientes):</label>
+            <input type="text" id="ambienteInput" value="8,9,8,9,9" placeholder="Ej: 8,9,8,9,9">
+        </div>
+
+        <button onclick="procesarCalificaciones()">Calcular Promedios</button>
+
+        <div id="resultado"></div>
+    </div>
+
+    <script>
+        async function procesarCalificaciones() {
+            const atencion = document.getElementById('atencionInput').value.trim();
+            const comida = document.getElementById('comidaInput').value.trim();
+            const precio = document.getElementById('precioInput').value.trim();
+            const ambiente = document.getElementById('ambienteInput').value.trim();
+
+            if (!atencion || !comida || !precio || !ambiente) {
+                alert("Por favor, ingrese las calificaciones para todos los aspectos.");
+                return;
+            }
+
+            // Validación de formato básica para asegurar que son números y comas
+            const ratingListRegex = /^(\s*\d+\s*(,\s*\d+\s*)*)?$/;
+            if (!ratingListRegex.test(atencion) || !ratingListRegex.test(comida) ||
+                !ratingListRegex.test(precio) || !ratingListRegex.test(ambiente)) {
+                document.getElementById('resultado').innerText = "Error: Asegúrese de que las calificaciones son números enteros y están separadas por comas.";
+                return;
+            }
+
+            const url = `/restaurante/calificaciones?atencion=${encodeURIComponent(atencion)}&comida=${encodeURIComponent(comida)}&precio=${encodeURIComponent(precio)}&ambiente=${encodeURIComponent(ambiente)}`;
+
+            try {
+                const response = await fetch(url);
+                if (!response.ok) {
+                    const errorText = await response.text();
+                    throw new Error(`Error HTTP: ${response.status} - ${errorText}`);
+                }
+                const data = await response.text();
+                document.getElementById('resultado').innerText = data;
+            } catch (error) {
+                console.error("Error al procesar calificaciones:", error);
+                document.getElementById('resultado').innerText = "Hubo un error al procesar las calificaciones: " + error.message;
+            }
+        }
+    </script>
+</body>
+</html>
