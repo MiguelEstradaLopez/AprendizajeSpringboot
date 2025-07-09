@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Operaciones con Matrices NxN</title>
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        #resultadoMatriz {
+            white-space: pre; /* Mantiene saltos de línea y espacios en blanco */
+            text-align: left;
+            font-family: 'Roboto Mono', monospace; /* Para que la matriz se vea alineada */
+            background-color: var(--input-bg);
+            padding: 15px;
+            border-radius: 8px;
+            margin-top: 20px;
+        }
+        .matrix-section {
+            margin-bottom: 40px;
+            padding: 20px;
+            background-color: var(--card-bg);
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
+        .matrix-section h3 {
+            margin-top: 0;
+            color: var(--primary-color);
+        }
+        .input-group {
+            margin-bottom: 15px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Operaciones con Matrices N x N</h1>
+        <p class="info-text">Aquí puede probar diferentes algoritmos para manipular una matriz cuadrada de dimensión N x N.</p>
+
+        <div class="input-group">
+            <label for="nInput">Tamaño de la Matriz (N):</label>
+            <input type="number" id="nInput" value="5" min="1" placeholder="Ej: 5">
+        </div>
+
+        <div class="matrix-section">
+            <h3>Poner Cero en Ambas Diagonales</h3>
+            <button onclick="ejecutarOperacion('/matriz/diagonales-cero')">Ejecutar</button>
+            <pre id="resultadoDiagonales"></pre>
+        </div>
+
+        <div class="matrix-section">
+            <h3>Poner Cero en Primera y Última Fila/Columna (Bordes)</h3>
+            <button onclick="ejecutarOperacion('/matriz/bordes-cero')">Ejecutar</button>
+            <pre id="resultadoBordes"></pre>
+        </div>
+
+        <div class="matrix-section">
+            <h3>Llenar Matriz con `mat[i][j] = i+j`</h3>
+            <button onclick="ejecutarOperacion('/matriz/llenar-suma-indices')">Ejecutar</button>
+            <pre id="resultadoSumaIndices"></pre>
+        </div>
+
+        <div class="matrix-section">
+            <h3>Llenar Diagonal Principal con 1, 2, ..., N</h3>
+            <button onclick="ejecutarOperacion('/matriz/diagonal-principal-secuencia')">Ejecutar</button>
+            <pre id="resultadoDiagonalPrincipal"></pre>
+        </div>
+
+        <div class="matrix-section">
+            <h3>Llenar Filas Pares (1..N) e Impares (N..1)</h3>
+            <button onclick="ejecutarOperacion('/matriz/llenar-filas-alternado')">Ejecutar</button>
+            <pre id="resultadoFilasAlternado"></pre>
+        </div>
+    </div>
+
+    <script>
+        async function ejecutarOperacion(endpoint) {
+            const n = document.getElementById('nInput').value;
+            const targetId = `resultado${endpoint.split('/')[2].replace(/-/g, '')}`; // Ej: /matriz/diagonales-cero -> resultadoDiagonalesCero
+
+            if (n === "" || isNaN(n) || parseInt(n) <= 0) {
+                document.getElementById(targetId).innerText = "Error: N debe ser un entero positivo.";
+                return;
+            }
+
+            const url = `${endpoint}?n=${encodeURIComponent(n)}`;
+
+            try {
+                const response = await fetch(url);
+                if (!response.ok) {
+                    const errorText = await response.text();
+                    throw new Error(`Error HTTP: ${response.status} - ${errorText}`);
+                }
+                const data = await response.text();
+                document.getElementById(targetId).innerText = data;
+            } catch (error) {
+                console.error(`Error al ejecutar ${endpoint}:`, error);
+                document.getElementById(targetId).innerText = `Hubo un error: ${error.message}`;
+            }
+        }
+    </script>
+</body>
+</html>

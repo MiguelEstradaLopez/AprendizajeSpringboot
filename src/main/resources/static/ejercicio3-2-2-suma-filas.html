@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Suma de Filas de Matriz</title>
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        #resultado {
+            white-space: pre-wrap; /* Mantiene saltos de línea y espacios en blanco */
+            text-align: left;
+            font-family: 'Roboto Mono', monospace; /* Fuente monoespaciada para mejor visualización de la matriz */
+            background-color: var(--input-bg);
+            padding: 15px;
+            border-radius: 8px;
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Suma de Filas de una Matriz</h1>
+        <p class="info-text">Ingrese las dimensiones de la matriz (filas y columnas) y luego todos sus elementos, separados por comas, en orden de fila por fila.</p>
+        <p class="info-text">Ejemplo: Para una matriz de 3x5 como la del problema:</p>
+        <pre class="example-matrix">
+3.5  6.5 30.0  8.2  0.0
+4.0  0.0 -1.0  3.6  1.4
+10.0 -1.5  3.4  6.6  2.0
+        </pre>
+        <p class="info-text">Ingrese: `filas = 3`, `columnas = 5`, `elementos = 3.5,6.5,30,8.2,0,4,0,-1,3.6,1.4,10,-1.5,3.4,6.6,2`</p>
+
+        <div class="input-group">
+            <label for="filasInput">Número de Filas:</label>
+            <input type="number" id="filasInput" value="3" min="1" max="100">
+        </div>
+
+        <div class="input-group">
+            <label for="columnasInput">Número de Columnas:</label>
+            <input type="number" id="columnasInput" value="5" min="1" max="50">
+        </div>
+
+        <div class="input-group">
+            <label for="elementosInput">Elementos de la Matriz (separados por comas, fila por fila):</label>
+            <textarea id="elementosInput" rows="4" placeholder="Ej: 3.5,6.5,30,8.2,0,4,0,-1,3.6,1.4,10,-1.5,3.4,6.6,2">3.5,6.5,30,8.2,0,4,0,-1,3.6,1.4,10,-1.5,3.4,6.6,2</textarea>
+        </div>
+
+        <button onclick="sumarFilas()">Calcular Suma de Filas</button>
+
+        <div id="resultado"></div>
+    </div>
+
+    <script>
+        async function sumarFilas() {
+            const filas = document.getElementById('filasInput').value;
+            const columnas = document.getElementById('columnasInput').value;
+            const elementos = document.getElementById('elementosInput').value.trim();
+
+            if (filas === "" || columnas === "" || elementos === "") {
+                alert("Por favor, complete todos los campos.");
+                return;
+            }
+
+            if (isNaN(parseInt(filas)) || isNaN(parseInt(columnas)) || parseInt(filas) <= 0 || parseInt(columnas) <= 0) {
+                document.getElementById('resultado').innerText = "Error: El número de filas y columnas debe ser un entero positivo.";
+                return;
+            }
+
+            // Validar que los elementos sean números y comas
+            const numberListRegex = /^-?\d+(\.\d+)?(\s*,\s*-?\d+(\.\d+)?)*$/;
+            if (!numberListRegex.test(elementos) && elementos !== "") { // Permite vacío si no hay elementos
+                document.getElementById('resultado').innerText = "Error: El formato de los elementos es incorrecto. Asegúrese de que son números y están separados por comas.";
+                return;
+            }
+
+            const url = `/matriz/suma-filas?filas=${encodeURIComponent(filas)}&columnas=${encodeURIComponent(columnas)}&elementos=${encodeURIComponent(elementos)}`;
+
+            try {
+                const response = await fetch(url);
+                if (!response.ok) {
+                    const errorText = await response.text();
+                    throw new Error(`Error HTTP: ${response.status} - ${errorText}`);
+                }
+                const data = await response.text();
+                document.getElementById('resultado').innerText = data;
+            } catch (error) {
+                console.error("Error al sumar filas:", error);
+                document.getElementById('resultado').innerText = "Hubo un error al sumar las filas de la matriz: " + error.message;
+            }
+        }
+    </script>
+</body>
+</html>

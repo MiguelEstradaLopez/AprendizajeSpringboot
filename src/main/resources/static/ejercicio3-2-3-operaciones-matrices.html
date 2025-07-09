@@ -1,0 +1,261 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Operaciones Avanzadas con Matrices</title>
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        .matrix-input-group {
+            border: 1px solid var(--border-color);
+            padding: 15px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            background-color: var(--input-bg);
+        }
+        .matrix-input-group h4 {
+            margin-top: 0;
+            color: var(--primary-color);
+        }
+        .matrix-section {
+            margin-bottom: 40px;
+            padding: 20px;
+            background-color: var(--card-bg);
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
+        .matrix-section h3 {
+            margin-top: 0;
+            color: var(--primary-color);
+        }
+        pre {
+            white-space: pre-wrap; /* Mantiene saltos de línea y espacios en blanco */
+            text-align: left;
+            font-family: 'Roboto Mono', monospace; /* Para que la matriz se vea alineada */
+            background-color: var(--input-bg);
+            padding: 15px;
+            border-radius: 8px;
+            margin-top: 10px;
+            overflow-x: auto; /* Permite scroll horizontal si la matriz es muy grande */
+        }
+        label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+        input[type="number"], textarea {
+            width: calc(100% - 22px); /* Ajuste para padding y borde */
+            padding: 10px;
+            margin-bottom: 10px;
+            border: 1px solid var(--border-color);
+            border-radius: 5px;
+            background-color: var(--input-bg);
+            color: var(--text-color);
+        }
+        textarea {
+            resize: vertical;
+        }
+        button {
+            padding: 10px 20px;
+            background-color: var(--button-bg);
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 1em;
+            transition: background-color 0.3s ease;
+            margin-top: 5px;
+        }
+        button:hover {
+            background-color: var(--button-hover-bg);
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Operaciones Avanzadas con Matrices</h1>
+        <p class="info-text">Realice operaciones de suma, traspuesta, traza y multiplicación con matrices.</p>
+
+        <div class="matrix-section">
+            <h3>1. Suma de Dos Matrices (A + B)</h3>
+            <p class="info-text">Ingrese las dimensiones y elementos de dos matrices de igual tamaño.</p>
+            <div class="matrix-input-group">
+                <h4>Matriz A</h4>
+                <label for="sumaFilasA">Filas de A:</label>
+                <input type="number" id="sumaFilasA" value="2" min="1">
+                <label for="sumaColumnasA">Columnas de A:</label>
+                <input type="number" id="sumaColumnasA" value="2" min="1">
+                <label for="sumaElementosA">Elementos de A (ej: 1,2,3,4):</label>
+                <textarea id="sumaElementosA" rows="2">1,2,3,4</textarea>
+            </div>
+            <div class="matrix-input-group">
+                <h4>Matriz B</h4>
+                <label for="sumaFilasB">Filas de B:</label>
+                <input type="number" id="sumaFilasB" value="2" min="1">
+                <label for="sumaColumnasB">Columnas de B:</label>
+                <input type="number" id="sumaColumnasB" value="2" min="1">
+                <label for="sumaElementosB">Elementos de B (ej: 5,6,7,8):</label>
+                <textarea id="sumaElementosB" rows="2">5,6,7,8</textarea>
+            </div>
+            <button onclick="sumarMatrices()">Calcular Suma</button>
+            <pre id="resultadoSuma"></pre>
+        </div>
+
+        <div class="matrix-section">
+            <h3>2. Traspuesta de una Matriz (A^T)</h3>
+            <p class="info-text">Ingrese las dimensiones y elementos de una matriz.</p>
+            <div class="matrix-input-group">
+                <h4>Matriz A</h4>
+                <label for="traspuestaFilasA">Filas de A:</label>
+                <input type="number" id="traspuestaFilasA" value="2" min="1">
+                <label for="traspuestaColumnasA">Columnas de A:</label>
+                <input type="number" id="traspuestaColumnasA" value="3" min="1">
+                <label for="traspuestaElementosA">Elementos de A (ej: 1,2,3,4,5,6):</label>
+                <textarea id="traspuestaElementosA" rows="2">1,2,3,4,5,6</textarea>
+            </div>
+            <button onclick="obtenerTraspuesta()">Calcular Traspuesta</button>
+            <pre id="resultadoTraspuesta"></pre>
+        </div>
+
+        <div class="matrix-section">
+            <h3>3. Traza de una Matriz Cuadrada</h3>
+            <p class="info-text">Ingrese la dimensión (N) y los elementos de una matriz cuadrada (NxN).</p>
+            <div class="matrix-input-group">
+                <h4>Matriz A (NxN)</h4>
+                <label for="trazaN">Dimensión N:</label>
+                <input type="number" id="trazaN" value="3" min="1">
+                <label for="trazaElementosA">Elementos de A (ej: 1,2,3,4,5,6,7,8,9):</label>
+                <textarea id="trazaElementosA" rows="3">1,2,3,4,5,6,7,8,9</textarea>
+            </div>
+            <button onclick="obtenerTraza()">Calcular Traza</button>
+            <pre id="resultadoTraza"></pre>
+        </div>
+
+        <div class="matrix-section">
+            <h3>4. Multiplicación de Dos Matrices (A * B)</h3>
+            <p class="info-text">Ingrese las dimensiones y elementos de dos matrices. Las columnas de A deben ser iguales a las filas de B.</p>
+            <div class="matrix-input-group">
+                <h4>Matriz A (nxm)</h4>
+                <label for="mulFilasA">Filas de A (n):</label>
+                <input type="number" id="mulFilasA" value="2" min="1">
+                <label for="mulColumnasA">Columnas de A (m):</label>
+                <input type="number" id="mulColumnasA" value="2" min="1">
+                <label for="mulElementosA">Elementos de A (ej: 1,2,3,4):</label>
+                <textarea id="mulElementosA" rows="2">1,2,3,4</textarea>
+            </div>
+            <div class="matrix-input-group">
+                <h4>Matriz B (mxk)</h4>
+                <label for="mulFilasB">Filas de B (m):</label>
+                <input type="number" id="mulFilasB" value="2" min="1">
+                <label for="mulColumnasB">Columnas de B (k):</label>
+                <input type="number" id="mulColumnasB" value="2" min="1">
+                <label for="mulElementosB">Elementos de B (ej: 5,6,7,8):</label>
+                <textarea id="mulElementosB" rows="2">5,6,7,8</textarea>
+            </div>
+            <button onclick="multiplicarMatrices()">Calcular Multiplicación</button>
+            <pre id="resultadoMultiplicacion"></pre>
+        </div>
+
+    </div>
+
+    <script>
+        // Función general para validar los inputs numéricos de matrices
+        function validateMatrixInputs(filasId, columnasId, elementosId) {
+            const filas = document.getElementById(filasId) ? document.getElementById(filasId).value : null;
+            const columnas = document.getElementById(columnasId) ? document.getElementById(columnasId).value : null;
+            const elementos = document.getElementById(elementosId).value.trim();
+
+            if (filas !== null && (filas === "" || isNaN(parseInt(filas)) || parseInt(filas) <= 0)) {
+                return `Error: El número de filas debe ser un entero positivo.`;
+            }
+            if (columnas !== null && (columnas === "" || isNaN(parseInt(columnas)) || parseInt(columnas) <= 0)) {
+                return `Error: El número de columnas debe ser un entero positivo.`;
+            }
+            if (elementos === "") {
+                return `Error: Los elementos de la matriz no pueden estar vacíos.`;
+            }
+
+            // Regex para validar números (enteros o decimales, positivos o negativos) y comas
+            const numberListRegex = /^-?\d+(\.\d+)?(\s*,\s*-?\d+(\.\d+)?)*$/;
+            if (!numberListRegex.test(elementos)) {
+                return `Error: El formato de los elementos es incorrecto. Asegúrese de que son números y están separados por comas.`;
+            }
+            return null; // No hay errores
+        }
+
+        async function fetchMatrixOperation(endpoint, params, targetId) {
+            const queryString = new URLSearchParams(params).toString();
+            const url = `${endpoint}?${queryString}`;
+
+            try {
+                const response = await fetch(url);
+                const data = await response.text();
+                if (!response.ok) {
+                    throw new Error(data); // El backend devuelve el mensaje de error directamente
+                }
+                document.getElementById(targetId).innerText = data;
+            } catch (error) {
+                console.error(`Error en ${endpoint}:`, error);
+                document.getElementById(targetId).innerText = `Hubo un error: ${error.message}`;
+            }
+        }
+
+        async function sumarMatrices() {
+            let error = validateMatrixInputs('sumaFilasA', 'sumaColumnasA', 'sumaElementosA');
+            if (error) { document.getElementById('resultadoSuma').innerText = error; return; }
+            error = validateMatrixInputs('sumaFilasB', 'sumaColumnasB', 'sumaElementosB');
+            if (error) { document.getElementById('resultadoSuma').innerText = error; return; }
+
+            const params = {
+                filasA: document.getElementById('sumaFilasA').value,
+                columnasA: document.getElementById('sumaColumnasA').value,
+                elementosA: document.getElementById('sumaElementosA').value,
+                filasB: document.getElementById('sumaFilasB').value,
+                columnasB: document.getElementById('sumaColumnasB').value,
+                elementosB: document.getElementById('sumaElementosB').value
+            };
+            fetchMatrixOperation('/matriz/suma', params, 'resultadoSuma');
+        }
+
+        async function obtenerTraspuesta() {
+            let error = validateMatrixInputs('traspuestaFilasA', 'traspuestaColumnasA', 'traspuestaElementosA');
+            if (error) { document.getElementById('resultadoTraspuesta').innerText = error; return; }
+
+            const params = {
+                filasA: document.getElementById('traspuestaFilasA').value,
+                columnasA: document.getElementById('traspuestaColumnasA').value,
+                elementosA: document.getElementById('traspuestaElementosA').value
+            };
+            fetchMatrixOperation('/matriz/traspuesta', params, 'resultadoTraspuesta');
+        }
+
+        async function obtenerTraza() {
+            let error = validateMatrixInputs('trazaN', 'trazaN', 'trazaElementosA'); // Se usa 'trazaN' para filas y columnas
+            if (error) { document.getElementById('resultadoTraza').innerText = error; return; }
+
+            const params = {
+                n: document.getElementById('trazaN').value,
+                elementosA: document.getElementById('trazaElementosA').value
+            };
+            fetchMatrixOperation('/matriz/traza', params, 'resultadoTraza');
+        }
+
+        async function multiplicarMatrices() {
+            let error = validateMatrixInputs('mulFilasA', 'mulColumnasA', 'mulElementosA');
+            if (error) { document.getElementById('resultadoMultiplicacion').innerText = error; return; }
+            error = validateMatrixInputs('mulFilasB', 'mulColumnasB', 'mulElementosB');
+            if (error) { document.getElementById('resultadoMultiplicacion').innerText = error; return; }
+
+            const params = {
+                filasA: document.getElementById('mulFilasA').value,
+                columnasA: document.getElementById('mulColumnasA').value,
+                elementosA: document.getElementById('mulElementosA').value,
+                filasB: document.getElementById('mulFilasB').value,
+                columnasB: document.getElementById('mulColumnasB').value,
+                elementosB: document.getElementById('mulElementosB').value
+            };
+            fetchMatrixOperation('/matriz/multiplicacion', params, 'resultadoMultiplicacion');
+        }
+    </script>
+</body>
+</html>
