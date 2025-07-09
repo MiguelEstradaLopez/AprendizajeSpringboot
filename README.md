@@ -172,19 +172,81 @@ Para cada ejercicio que incluye un archivo HTML en la carpeta `src/main/resource
 
 ### 6.3. Ejercicios Implementados
 
-Esta sección se actualizará a medida que se implementen más ejercicios:
+Esta sección lista los ejercicios que han sido implementados en esta API, junto con sus respectivos endpoints y frontends interactivos.
 
 * **1. Cálculo de IVA (19%)**
-    * **Endpoint:** `GET /iva/calcular?precio={valor}`
+    * **Endpoint:** `GET http://localhost:8082/iva/calcular?precio={valor}`
     * **Frontend:** `http://localhost:8082/ejercicio1-iva.html`
-    * **Descripción:** Pide el precio de un artículo y calcula su valor aplicándole un incremento del 19% de IVA.
+    * **Descripción:** Calcula el precio final de un artículo aplicando un 19% de IVA.
 
-* **2. [Título del Ejercicio 2]**
-    * *(Se añadirá aquí una vez implementado)*
+* **2. Área de un Rectángulo**
+    * **Endpoint:** `GET http://localhost:8082/rectangulo/area?largo={valor}&ancho={valor}`
+    * **Frontend:** `http://localhost:8082/ejercicio2-rectangulo.html`
+    * **Descripción:** Calcula y muestra el área de un rectángulo dadas su longitud y anchura.
 
-*(...y así sucesivamente para los 16 ejercicios)*
+* **3. Operaciones Básicas con Dos Números**
+    * **Endpoint:** `GET http://localhost:8082/operaciones/basicas?num1={valor}&num2={valor}`
+    * **Frontend:** `http://localhost:8082/ejercicio3-operaciones.html`
+    * **Descripción:** Lee dos números e imprime su suma, producto, diferencia y cociente.
 
----
+* **4. Determinante de una Matriz 2x2**
+    * *(Pendiente de implementación)*
+    * **Descripción:** Calcule el determinante de una matriz de dos filas y dos columnas.
+
+* **5. Intercambio de Caracteres**
+    * *(Pendiente de implementación)*
+    * **Descripción:** Intercambie los datos de dos variables que almacenan caracteres.
+
+* **6. Nota Definitiva Lógica de Programación I (Complejo)**
+    * *(Pendiente de implementación)*
+    * **Descripción:** Calcula la nota definitiva de un estudiante teniendo en cuenta examen parcial (20%), examen final (20%) y seguimiento (60% - promedio entre dos quices, un taller y un proyecto).
+
+* **7. Volumen de un Cono**
+    * *(Pendiente de implementación)*
+    * **Descripción:** Calcule el volumen de un cono, la fórmula a emplear es: Volumen= (π * radio² * altura)/3.
+
+* **8. Porcentaje de Estudiantes (Hombres/Mujeres)**
+    * *(Pendiente de implementación)*
+    * **Descripción:** Calcule el porcentaje de estudiantes mujeres y el porcentaje de estudiantes hombres de un salón de clases.
+
+* **9. Perímetro de un Rectángulo**
+    * *(Pendiente de implementación)*
+    * **Descripción:** Calcule el perímetro de un rectángulo, conociendo la longitud de dos lados no paralelos. Perímetro= L1+ L2.
+
+* **10. Conversión Fahrenheit a Celsius**
+    * **Endpoint:** `GET http://localhost:8082/temperatura/fahrenheit-to-celsius?fahrenheit={valor}`
+    * **Frontend:** `http://localhost:8082/ejercicio10-fahrenheit-celsius.html`
+    * **Descripción:** Convierte una temperatura dada en grados Fahrenheit a grados Celsius.
+
+* **11. Cálculo de Interés**
+    * **Endpoint:** `GET http://localhost:8082/finanzas/calcular-interes?monto={valor}&interes={valor}`
+    * **Frontend:** `http://localhost:8082/ejercicio11-interes.html`
+    * **Descripción:** Calcula el valor ganado por concepto de interés, dada una inversión y un porcentaje de interés.
+
+* **12. Valor de Cuota Inicial de Casa**
+    * **Endpoint:** `GET http://localhost:8082/inmuebles/calcular-casa?valor={valor}`
+    * **Frontend:** `http://localhost:8082/ejercicio12-casa.html`
+    * **Descripción:** Calcula el valor de la cuota inicial (20%), el valor restante a prestar al banco y la cuota mensual de la cuota inicial (en 24 cuotas).
+
+* **13. Venta Total de Restaurante (Combos)**
+    * **Endpoint:** `GET http://localhost:8082/restaurante/ventas?combo1={cant}&combo2={cant}&combo3={cant}`
+    * **Frontend:** `http://localhost:8082/ejercicio13-restaurante.html`
+    * **Descripción:** Determina el valor total vendido por un restaurante en un día a partir de la cantidad de combos vendidos de cada tipo.
+
+* **14. Porcentaje de Inversión en Empresa**
+    * **Endpoint:** `GET http://localhost:8082/empresa/porcentaje-inversion?inv1={monto}&inv2={monto}&inv3={monto}`
+    * **Frontend:** `http://localhost:8082/ejercicio14-inversion.html`
+    * **Descripción:** Calcula el porcentaje que cada una de tres personas invierte con respecto a la cantidad total invertida en una empresa.
+
+* **15. Número Invertido (Dos Cifras)**
+    * **Endpoint:** `GET http://localhost:8082/numeros/invertir-dos-cifras?numero={valor}`
+    * **Frontend:** `http://localhost:8082/ejercicio15-invertir-numero.html`
+    * **Descripción:** Dado un número de dos cifras, obtiene y muestra el número invertido (ej. 15 -> 51).
+
+* **16. Nota Definitiva de Asignatura (Simple)**
+    * **Endpoint:** `GET http://localhost:8082/notas/definitiva?parcial={nota}&final={nota}&seguimiento={nota}`
+    * **Frontend:** `http://localhost:8082/ejercicio16-nota-definitiva.html`
+    * **Descripción:** Calcula la nota definitiva de un estudiante a partir de las notas del examen parcial (20%), examen final (20%) y seguimiento (60%).
 
 ## 7. Parar la Aplicación
 
