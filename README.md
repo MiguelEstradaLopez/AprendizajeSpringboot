@@ -1,8 +1,7 @@
 # AprendizajeSpringboot - Proyecto API Tarea
 
 ![Spring Boot Logo](https://img.shields.io/badge/Spring%20Boot-3.3.0-green.svg)
-![Java Version](https://img.shields.io/badge/Java-24-blue.svg)
-![Maven](https://img.shields.io/badge/Maven-3.x-red.svg)
+![Java Version](https://img.shields.io/badge/Java-17%2B-blue.svg) ![Maven](https://img.shields.io/badge/Maven-3.x-red.svg)
 ![GitHub Repo stars](https://img.shields.io/github/stars/MiguelEstradaLopez/AprendizajeSpringboot?style=social)
 
 Este repositorio contiene el código de la aplicación "API Tarea", desarrollada con Spring Boot. La aplicación implementa diversas funcionalidades matemáticas y lógicas a través de endpoints REST, y se complementa con pequeños "frontends" en HTML y JavaScript para una interacción sencilla y visual.
@@ -40,7 +39,7 @@ El objetivo de este proyecto es implementar una serie de ejercicios de lógica d
 
 Para poder ejecutar y trabajar con este proyecto, necesitarás tener instalado lo siguiente en tu equipo:
 
-* **Java Development Kit (JDK):** Versión 17 o superior. (Desarrollado con JDK 24.0.1)
+* **Java Development Kit (JDK):** Versión 17 o superior. (Desarrollado con JDK 24.0.1, pero compatible con 17+).
     * Verificar versión: `java -version`
 * **Apache Maven:** Versión 3.6.0 o superior (el proyecto incluye Maven Wrapper, `mvnw`, por lo que una instalación global no es estrictamente necesaria, pero es recomendable).
     * Verificar versión: `mvn -v`
@@ -71,7 +70,7 @@ Sigue estos pasos para obtener el código fuente y preparar el proyecto en tu en
 
 1.  Abre Visual Studio Code.
 2.  Ve a `File` (Archivo) > `Open Folder...` (Abrir Carpeta...).
-3.  Navega hasta la carpeta `AprendizajeSpringboot` (o `api_tarea` si la renombraste localmente) y selecciónala.
+3.  Navega hasta la carpeta `AprendizajeSpringboot` y selecciónala.
 4.  VS Code detectará que es un proyecto Spring Boot/Maven y comenzará a importar las dependencias. Espera a que este proceso finalice.
 
 ### 3.3. Configuración de Git (si es la primera vez)
@@ -98,23 +97,58 @@ AprendizajeSpringboot/
 │           └── com/
 │               └── projecto1/
 │                   └── api_tarea/
-│                       ├── ApiTareaApplication.java      # Clase principal de Spring Boot
-│                       └── controller/                   # Aquí residen los controladores REST
-│                           └── SaludoController.java     # Controlador de ejemplo
-│                           └── IVAController.java        # Controlador para el Ejercicio 1
-│                       └── service/                      # (Opcional) Clases de lógica de negocio
-│                       └── model/                        # (Opcional) Clases de modelos de datos
+│                       ├── ApiTareaApplication.java             # Clase principal de Spring Boot
+│                       ├── controller/                          # Aquí residen los controladores REST
+│                       │   ├── SaludoController.java
+│                       │   ├── IVAController.java
+│                       │   ├── RectanguloController.java
+│                       │   ├── OperacionesBasicasController.java
+│                       │   ├── TemperaturaController.java
+│                       │   ├── FinanzasController.java
+│                       │   ├── InmueblesController.java
+│                       │   ├── RestauranteController.java
+│                       │   ├── EmpresaController.java
+│                       │   ├── NumerosController.java
+│                       │   ├── NotasController.java
+│                       │   ├── VectorOperationsController.java    # Para 1.2.1, 1.2.2, 1.2.3, 1.3.1, 1.3.2, 1.3.3
+│                       │   ├── HaciendaController.java            # Para 3.1.2
+│                       │   ├── MatrixOperationsController.java    # Para 3.2.1
+│                       │   ├── MatrixRowSumController.java        # Para 3.2.2
+│                       │   └── MatrixOperationsAdvancedController.java # Para 3.2.3
+│                       └── utils/                               # Clases de utilidad
+│                           └── MatrixUtils.java                 # Utilidades para manipulación de matrices
 │       └── resources/
-│           ├── application.properties                  # Configuración de la aplicación (ej. puerto)
-│           ├── static/                                 # Aquí se alojan los archivos HTML/CSS/JS para los frontends
-│               └── ejercicio1-iva.html                 # Frontend para el Ejercicio 1
-│           └── templates/                              # (Opcional) Para motores de plantillas como Thymeleaf
-├── .gitignore                                            # Archivos y directorios a ignorar por Git
-├── HELP.md                                               # Archivo de ayuda de Spring Boot
-├── mvnw                                                  # Script de Maven Wrapper (Linux/macOS)
-├── mvnw.cmd                                              # Script de Maven Wrapper (Windows)
-└── pom.xml                                               # Archivo de configuración de Maven (dependencias, plugins)
-
+│           ├── application.properties                 # Configuración de la aplicación (ej. puerto)
+│           ├── static/                                # Aquí se alojan los archivos HTML/CSS/JS para los frontends
+│           │   ├── index.html                           # Página principal con enlaces a todos los ejercicios
+│           │   ├── styles.css                           # Estilos CSS compartidos
+│           │   ├── ejercicio1-iva.html
+│           │   ├── ejercicio2-rectangulo.html
+│           │   ├── ejercicio3-operaciones.html
+│           │   ├── ejercicio10-fahrenheit-celsius.html
+│           │   ├── ejercicio11-interes.html
+│           │   ├── ejercicio12-casa.html
+│           │   ├── ejercicio13-restaurante.html
+│           │   ├── ejercicio14-inversion.html
+│           │   ├── ejercicio15-invertir-numero.html
+│           │   ├── ejercicio16-nota-definitiva.html
+│           │   ├── problema1-2-1-examen.html
+│           │   ├── problema1-2-2-normalizacion.html
+│           │   ├── problema1-2-3-suma-binaria.html
+│           │   ├── ejercicio1-3-1-mezcla-arreglos.html
+│           │   ├── ejercicio1-3-2-buscar-indices.html
+│           │   ├── ejercicio1-3-3-arreglo-partidario.html
+│           │   ├── problema3-1-1-restaurante.html
+│           │   ├── problema3-1-2-hacienda.html
+│           │   ├── ejercicio3-2-1-matrices.html
+│           │   ├── ejercicio3-2-2-suma-filas.html
+│           │   └── ejercicio3-2-3-operaciones-matrices.html
+│           └── templates/                           # (Opcional) Para motores de plantillas como Thymeleaf
+├── .gitignore                                       # Archivos y directorios a ignorar por Git
+├── HELP.md                                          # Archivo de ayuda de Spring Boot
+├── mvnw                                             # Script de Maven Wrapper (Linux/macOS)
+├── mvnw.cmd                                         # Script de Maven Wrapper (Windows)
+└── pom.xml                                          # Archivo de configuración de Maven (dependencias, plugins)
 
 
 ---
@@ -248,6 +282,54 @@ Esta sección lista los ejercicios que han sido implementados en esta API, junto
     * **Frontend:** `http://localhost:8082/ejercicio16-nota-definitiva.html`
     * **Descripción:** Calcula la nota definitiva de un estudiante a partir de las notas del examen parcial (20%), examen final (20%) y seguimiento (60%).
 
+### Ejercicios de Vectores y Matrices
+
+* **Problema 1.2.1: Calificación de Examen de Selección Múltiple**
+    * **Frontend:** `http://localhost:8082/problema1-2-1-examen.html`
+    * **Descripción:** Califica un examen de selección múltiple comparando las respuestas del estudiante con las correctas.
+
+* **Problema 1.2.2: Normalización de una Colección de Números Reales**
+    * **Frontend:** `http://localhost:8082/problema1-2-2-normalizacion.html`
+    * **Descripción:** Normaliza un vector de números reales.
+
+* **Problema 1.2.3: Suma en Binario**
+    * **Frontend:** `http://localhost:8082/problema1-2-3-suma-binaria.html`
+    * **Descripción:** Realiza la suma de dos números binarios ingresados como cadenas.
+
+* **Ejercicio 1.3.1: Mezcla de Arreglos Ordenados**
+    * **Frontend:** `http://localhost:8082/ejercicio1-3-1-mezcla-arreglos.html`
+    * **Descripción:** Mezcla dos arreglos de números reales ordenados en un único arreglo ordenado.
+
+* **Ejercicio 1.3.2: Búsqueda de Índices de un Número en Arreglo**
+    * **Frontend:** `http://localhost:8082/ejercicio1-3-2-buscar-indices.html`
+    * **Descripción:** Busca todas las ocurrencias de un número dado en un arreglo y devuelve sus índices.
+
+* **Ejercicio 1.3.3: Arreglo Partidario**
+    * **Frontend:** `http://localhost:8082/ejercicio1-3-3-arreglo-partidario.html`
+    * **Descripción:** Separa los números positivos y negativos de un arreglo en dos arreglos distintos.
+
+* **Problema 3.1.1: Calificación de Aspectos de Restaurante (Clientes)**
+    * **Frontend:** `http://localhost:8082/problema3-1-1-restaurante.html`
+    * **Descripción:** Calcula promedios de calificación para diferentes aspectos de un restaurante basados en encuestas de clientes.
+
+* **Problema 3.1.2: Producción de Leche en Hacienda (Matriz 7xN)**
+    * **Frontend:** `http://localhost:8082/problema3-1-2-hacienda.html`
+    * **Descripción:** Procesar la producción de leche de N vacas durante 7 días, almacenada en una matriz.
+
+* **Ejercicio 3.2.1: Operaciones con Diagonales y Bordes de Matriz NxN**
+    * **Frontend:** `http://localhost:8082/ejercicio3-2-1-matrices.html`
+    * **Descripción:** Algoritmos para poner ceros en diagonales, en bordes, llenar con `i+j`, y secuencias en filas/diagonal principal de una matriz NxN.
+
+* **Ejercicio 3.2.2: Suma de Filas de Matriz en un Arreglo**
+    * **Frontend:** `http://localhost:8082/ejercicio3-2-2-suma-filas.html`
+    * **Descripción:** Lee una matriz de números reales y calcula la suma de los elementos de cada una de sus filas, guardándolos en un arreglo.
+
+* **Ejercicio 3.2.3: Operaciones con Matrices (Suma, Traspuesta, Traza, Multiplicación)**
+    * **Frontend:** `http://localhost:8082/ejercicio3-2-3-operaciones-matrices.html`
+    * **Descripción:** Implementa la suma, traspuesta, traza y multiplicación de matrices, incluyendo validaciones de dimensiones.
+
+---
+
 ## 7. Parar la Aplicación
 
 * **Desde VS Code (Spring Boot Dashboard):**
@@ -287,7 +369,5 @@ Esta sección lista los ejercicios que han sido implementados en esta API, junto
 * **Errores de compilación en VS Code (`Missing mandatory Classpath entries` o problemas de `package`):**
     * **Causa:** Generalmente se debe a una declaración de paquete incorrecta o a que Maven no ha resuelto las dependencias.
     * **Solución:**
-        1.  Verifica que las líneas `package` en tus archivos Java (`ApiTareaApplication.java` y `SaludoController.java`) coincidan exactamente con la estructura de carpetas (ej., `package com.projecto1.api_tarea;` para `ApiTareaApplication.java` y `package com.projecto1.api_tarea.controller;` para `SaludoController.java`).
+        1.  Verifica que las líneas `package` en tus archivos Java (`ApiTareaApplication.java` y `SaludoController.java`, etc.) coincidan exactamente con la estructura de carpetas (ej., `package com.projecto1.api_tarea;` para `ApiTareaApplication.java` y `package com.projecto1.api_tarea.controller;` para los controladores).
         2.  Abre la terminal en la raíz de tu proyecto y ejecuta `./mvnw clean install` para asegurar que todas las dependencias se descarguen y el proyecto se compile correctamente.
-
----
